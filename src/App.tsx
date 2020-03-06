@@ -56,6 +56,7 @@ function App() {
 
   const [showMenuBorder, setShowMenuBorder] = useState(false);
 
+  const [isOverlayHidden, setIsOverlayHidden] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", e => {
       const newBorderSetting = window.scrollY > 10;
@@ -96,7 +97,7 @@ function App() {
 
     timeout = setTimeout(() => {
       updateState();
-    }, 1000);
+    }, 1500);
 
     return () => {
       clearTimeout(timeout);
@@ -104,7 +105,21 @@ function App() {
   }, [messageIndex, heroWords, heroWordRefs, heroTextWidth]);
 
   return (
-    <div className={css(styles.siteContainer)}>
+    <div className={css(styles.siteContainer)} id="home">
+      {!isOverlayHidden && (
+        <div
+          className={css(styles.mobileOverlay)}
+          onClick={() => setIsOverlayHidden(true)}
+        >
+          <div style={{ textAlign: "center" }}>
+            My site hasn't been optimised for small screens yet, sorry about
+            that.
+          </div>
+          <div style={{ textAlign: "center", marginTop: 30 }}>
+            Click or tap to continue >
+          </div>
+        </div>
+      )}
       <div className={css(styles.foldContainer)}>
         <div className={css(styles.heroContainer)}>
           <div className={css(styles.heroText)}>
@@ -150,7 +165,7 @@ function App() {
           </div>
         </div>
         <div className={css(styles.foldPointerContainer)}>
-          <div className={css(styles.foldPointer)}>see more</div>
+          <div className={css(styles.foldPointer)}>more</div>
           <div className={css(styles.foldPointer)}>v</div>
         </div>
         <div
@@ -162,24 +177,31 @@ function App() {
             </div>
           </div>
           <div className={css(styles.menuRightAlign)}>
-            <div className={css(styles.menuItem)}>home</div>
-            <div className={css(styles.menuItem)}>about</div>
-            <div className={css(styles.menuItem)}>projects</div>
-            <div className={css(styles.menuItem)}>contact</div>
+            <a className={css(styles.menuItem)} href="#home">
+              home
+            </a>
+            <a className={css(styles.menuItem)} href="#about">
+              about
+            </a>
+            <a className={css(styles.menuItem)} href="#projects">
+              projects
+            </a>
+            <a className={css(styles.menuItem)} href="#contact">
+              contact
+            </a>
           </div>
         </div>
       </div>
-
       <div className={css(styles.mainContentContainer)}>
         <div
           className={css(styles.subContentContainer)}
           style={{ position: "relative", top: -20 }}
         >
-          <div className={css(styles.contentContainer)}>
+          <div className={css(styles.contentContainer)} id="about">
             <div className={css(styles.contentHeader)}>About me</div>
             <div className={css([styles.contentContent, styles.aboutContent])}>
               <p>
-                I am a{" "}
+                My name is Jacob and I am a{" "}
                 <span className={css(styles.highlightColour)}>
                   Software Developer
                 </span>{" "}
@@ -220,7 +242,7 @@ function App() {
             </div>
           </div>
 
-          <div className={css(styles.contentContainer)}>
+          <div className={css(styles.contentContainer)} id="projects">
             <div className={css(styles.contentHeader)}>Featured Projects</div>
             <div className={css(styles.contentContent)}>
               <div className={css(styles.projectContainer)}>
@@ -341,7 +363,7 @@ function App() {
             </div>
           </div>
 
-          <div className={css(styles.contentContainer)}>
+          <div className={css(styles.contentContainer)} id="contact">
             <div className={css(styles.contentHeader)}>Contact Me</div>
 
             <div className={css(styles.projectContainer)}>
@@ -479,7 +501,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  heroTextStatic: {},
+  heroTextStatic: {
+    whiteSpace: "nowrap"
+  },
   foldPointerContainer: {
     position: "absolute",
     bottom: 30
@@ -525,7 +549,12 @@ const styles = StyleSheet.create({
     margin: "30px 30px",
     fontSize: 20,
     fontFamily: StyleProvider.getFont(),
-    color: StyleProvider.getFontColour()
+    color: StyleProvider.getFontColour(),
+    transition: "0.3s",
+    textDecoration: "none",
+    ":hover": {
+      color: StyleProvider.getHighlightFontColour()
+    }
   },
   menuLeftAlign: {
     flex: 1,
@@ -620,6 +649,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     fontFamily: StyleProvider.getFont()
+  },
+  mobileOverlay: {
+    position: "fixed",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 10000,
+    display: "none",
+    background: StyleProvider.getBackgroundColour(),
+    color: StyleProvider.getFontColour(),
+    fontFamily: StyleProvider.getFont(),
+    padding: 40,
+    fontSize: 40,
+    "@media (max-width: 750px)": {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column"
+    }
   }
 });
 

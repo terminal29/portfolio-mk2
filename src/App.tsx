@@ -34,9 +34,25 @@ function App() {
   const [heroTextWidth, setHeroTextWidth] = useState(0);
   const [heroTextHeight, setHeroTextHeight] = useState(0);
 
+  const [showMenuBorder, setShowMenuBorder] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", e => {
+      const newBorderSetting = window.scrollY > 10;
+      if (showMenuBorder !== newBorderSetting) {
+        setShowMenuBorder(newBorderSetting);
+      }
+    });
+  });
+
   const dynStyles = StyleSheet.create({
     heroTextDyn: {
       width: heroTextWidth
+    },
+    menuContainerBorder: {
+      borderBottomWidth: showMenuBorder ? 1 : 0,
+      borderBottomColor: "#090909",
+      borderBottomStyle: "solid"
     }
   });
 
@@ -71,6 +87,7 @@ function App() {
             <div className={css(styles.heroTextStatic)}>I like to make</div>
             <div
               className={css([styles.heroTextSpacing, dynStyles.heroTextDyn])}
+              style={{ transition: "0.3s" }}
             >
               {heroWords.map((word, idx) => (
                 <div
@@ -93,8 +110,6 @@ function App() {
                         outputRange: [1, 0.4, 0.2, 0.0]
                       }
                     ),
-                    transition: "0.3s",
-                    position: "absolute",
                     transform: `translateY(${heroTextHeight *
                       (messageIndex -
                         idx -
@@ -115,11 +130,20 @@ function App() {
           <div className={css(styles.foldPointer)}>see more</div>
           <div className={css(styles.foldPointer)}>v</div>
         </div>
-        <div className={css(styles.menuContainer)}>
-          <div className={css(styles.menuItem)}>home</div>
-          <div className={css(styles.menuItem)}>about</div>
-          <div className={css(styles.menuItem)}>projects</div>
-          <div className={css(styles.menuItem)}>contact</div>
+        <div
+          className={css([styles.menuContainer, dynStyles.menuContainerBorder])}
+        >
+          <div className={css(styles.menuLeftAlign)}>
+            <div className={css(styles.menuItem)}>
+              Jacob Hilton | Terminal29
+            </div>
+          </div>
+          <div className={css(styles.menuRightAlign)}>
+            <div className={css(styles.menuItem)}>home</div>
+            <div className={css(styles.menuItem)}>about</div>
+            <div className={css(styles.menuItem)}>projects</div>
+            <div className={css(styles.menuItem)}>contact</div>
+          </div>
         </div>
       </div>
 
@@ -167,7 +191,6 @@ const styles = StyleSheet.create({
   },
   heroTextSpacing: {
     display: "inline-flex",
-    transition: "0.3s",
     overflow: "visible",
     flexDirection: "column",
     justifyContent: "center",
@@ -180,7 +203,9 @@ const styles = StyleSheet.create({
     whiteSpace: "nowrap",
     textAlign: "center",
     margin: "0 auto",
-    flex: "0 0 auto"
+    flex: "0 0 auto",
+    position: "absolute",
+    transition: "0.3s"
   },
   menuContainer: {
     position: "fixed",
@@ -189,14 +214,24 @@ const styles = StyleSheet.create({
     left: 0,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
-    background: StyleProvider.getBackgroundColour() + `cc`
+    background: StyleProvider.getBackgroundColour() + `cc`,
+    height: 80
   },
   menuItem: {
     margin: "30px 30px",
     fontSize: 20,
     fontFamily: StyleProvider.getFont(),
     color: StyleProvider.getFontColour()
+  },
+  menuLeftAlign: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "flex-start"
+  },
+  menuRightAlign: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "flex-end"
   }
 });
 

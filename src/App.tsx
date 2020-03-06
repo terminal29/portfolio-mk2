@@ -4,6 +4,19 @@ import "./App.css";
 import { StyleProvider } from "./StyleProvider";
 import interpolate from "./helpers/interpolate";
 
+import {
+  DiJavascript,
+  DiReact,
+  DiJavascript1,
+  DiAndroid,
+  DiApple,
+  DiGithub,
+  DiGithubAlt,
+  DiGithubFull,
+  DiGithubBadge
+} from "react-icons/di";
+import { FaSteam, FaVrCardboard, FaGithub } from "react-icons/fa";
+
 function App() {
   const heroWords = [
     "experiments",
@@ -18,6 +31,13 @@ function App() {
   const [messageIndex, setMessageIndex] = useState(
     Math.floor(heroWords.length / 2)
   );
+
+  const [contactButtonStates, setContactButtonStates] = useState({
+    linkedin: false,
+    email: false,
+    github: false,
+    gitlab: false
+  });
 
   const mod = (m: number, n: number) => ((m % n) + n) % n;
 
@@ -51,6 +71,9 @@ function App() {
     },
     menuContainerBorder: {
       transition: "0.3s",
+      borderStyle: "solid",
+      borderBottomColor: StyleProvider.getBackgroundColour(),
+      borderBottomWidth: showMenuBorder ? 2 : 0,
       background: showMenuBorder
         ? StyleProvider.getLightBackgroundColour()
         : "#00000000"
@@ -105,7 +128,6 @@ function App() {
                           heroWords.length
                         )
                       ),
-
                       {
                         inputRange: [0, 1, 2, heroWords.length / 2 - 1],
                         outputRange: [1, 0.4, 0.2, 0.0]
@@ -155,7 +177,7 @@ function App() {
         >
           <div className={css(styles.contentContainer)}>
             <div className={css(styles.contentHeader)}>About me</div>
-            <div className={css(styles.contentContent)}>
+            <div className={css([styles.contentContent, styles.aboutContent])}>
               <p>
                 I am a{" "}
                 <span className={css(styles.highlightColour)}>
@@ -200,12 +222,231 @@ function App() {
 
           <div className={css(styles.contentContainer)}>
             <div className={css(styles.contentHeader)}>Featured Projects</div>
-            <div className={css(styles.contentContent)}></div>
+            <div className={css(styles.contentContent)}>
+              <div className={css(styles.projectContainer)}>
+                <div className={css(styles.projectHeader)}>
+                  Massless Pen OpenVR Driver
+                </div>
+                <div className={css(styles.projectIcons)}>
+                  <i
+                    className={`${css(
+                      styles.projectIcon
+                    )} devicon-cplusplus-plain`}
+                  ></i>
+                  <FaSteam className={css(styles.projectIcon)} />
+                  <FaVrCardboard className={css(styles.projectIcon)} />
+                </div>
+                <div className={css(styles.projectDescription)}>
+                  A driver for SteamVR to allow the 3D tracked Massless Pen to
+                  be used with the Oculus Rift, Oculus Quest, HTC Vive, and
+                  Valve Index headsets on the SteamVR platform.
+                </div>
+                <a
+                  className={css(styles.projectLink)}
+                  href={"https://massless.io/"}
+                >
+                  <div style={{ display: "inline-block", margin: 10 }}>
+                    View Massless on
+                  </div>
+                  <i
+                    className={`${css(
+                      styles.projectIcon
+                    )} devicon-firefox-plain`}
+                  ></i>
+                </a>
+              </div>
+              <div className={css(styles.projectContainer)}>
+                <div className={css(styles.projectHeader)}>Weeknotes</div>
+                <div className={css(styles.projectIcons)}>
+                  <i
+                    className={`${css(
+                      styles.projectIcon
+                    )} devicon-javascript-plain`}
+                  ></i>
+                  <DiReact className={css(styles.projectIcon)} />
+                  <DiAndroid className={css(styles.projectIcon)} />
+                  <DiApple className={css(styles.projectIcon)} />
+                </div>
+                <div className={css(styles.projectDescription)}>
+                  A work-in-progress calendar/note taking app built using React
+                  Native.
+                </div>
+                <a
+                  className={css(styles.projectLink)}
+                  href={"https://github.com/terminal29/weeknotes"}
+                >
+                  <div style={{ display: "inline-block", margin: 10 }}>
+                    View Project on{" "}
+                  </div>
+                  <FaGithub className={css(styles.projectIcon)} />
+                </a>
+              </div>
+              <div className={css(styles.projectContainer)}>
+                <div className={css(styles.projectHeader)}>
+                  SteamVR Driver Tutorial
+                </div>
+                <div className={css(styles.projectIcons)}>
+                  <i
+                    className={`${css(
+                      styles.projectIcon
+                    )} devicon-cplusplus-plain`}
+                  ></i>
+                  <FaSteam className={css(styles.projectIcon)} />
+                  <FaVrCardboard className={css(styles.projectIcon)} />
+                </div>
+                <div className={css(styles.projectDescription)}>
+                  A set of example drivers that show how to add custom
+                  controllers and HMDs to SteamVR.
+                </div>
+                <a
+                  className={css(styles.projectLink)}
+                  href={
+                    "https://github.com/terminal29/Simple-OpenVR-Driver-Tutorial"
+                  }
+                >
+                  <div style={{ display: "inline-block", margin: 10 }}>
+                    View Project on{" "}
+                  </div>
+                  <FaGithub className={css(styles.projectIcon)} />
+                </a>
+              </div>
+
+              <div className={css(styles.projectContainer)}>
+                <div className={css(styles.projectHeader)}>
+                  OpenVR Device Viewer
+                </div>
+                <div className={css(styles.projectIcons)}>
+                  <i
+                    className={`${css(
+                      styles.projectIcon
+                    )} devicon-cplusplus-plain`}
+                  ></i>
+                  <FaSteam className={css(styles.projectIcon)} />
+                  <FaVrCardboard className={css(styles.projectIcon)} />
+                </div>
+                <div className={css(styles.projectDescription)}>
+                  A small tool for displaying the currently connected devices to
+                  your SteamVR/OpenVR system.
+                </div>
+                <a
+                  className={css(styles.projectLink)}
+                  href={"https://github.com/terminal29/OpenVR-Device-Viewer"}
+                >
+                  <div style={{ display: "inline-block", margin: 10 }}>
+                    View Project on{" "}
+                  </div>
+                  <FaGithub className={css(styles.projectIcon)} />
+                </a>
+              </div>
+            </div>
           </div>
 
           <div className={css(styles.contentContainer)}>
             <div className={css(styles.contentHeader)}>Contact Me</div>
-            <div className={css(styles.contentContent)}></div>
+
+            <div className={css(styles.projectContainer)}>
+              <div className={css(styles.projectHeader)}>LinkedIn</div>
+              <div
+                className={css(styles.contactButton)}
+                onClick={() =>
+                  setContactButtonStates({
+                    ...contactButtonStates,
+                    linkedin: true
+                  })
+                }
+              >
+                <div style={{ display: "inline-block", margin: 10 }}>
+                  {!contactButtonStates.linkedin ? (
+                    "Click to show"
+                  ) : (
+                    <a
+                      style={{ color: StyleProvider.getFontColour() }}
+                      href="https://www.linkedin.com/in/jacob-hilton/"
+                    >
+                      https://www.linkedin.com/in/jacob-hilton/
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className={css(styles.projectContainer)}>
+              <div className={css(styles.projectHeader)}>Email</div>
+              <div
+                className={css(styles.contactButton)}
+                onClick={() =>
+                  setContactButtonStates({
+                    ...contactButtonStates,
+                    email: true
+                  })
+                }
+              >
+                <div style={{ display: "inline-block", margin: 10 }}>
+                  {!contactButtonStates.email ? (
+                    "Click to show"
+                  ) : (
+                    <a
+                      style={{ color: StyleProvider.getFontColour() }}
+                      href="mailto:jacob@terminal29.com"
+                    >
+                      jacob@terminal29.com
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className={css(styles.projectContainer)}>
+              <div className={css(styles.projectHeader)}>GitHub</div>
+              <div
+                className={css(styles.contactButton)}
+                onClick={() =>
+                  setContactButtonStates({
+                    ...contactButtonStates,
+                    github: true
+                  })
+                }
+              >
+                <div style={{ display: "inline-block", margin: 10 }}>
+                  {!contactButtonStates.github ? (
+                    "Click to show"
+                  ) : (
+                    <a
+                      style={{ color: StyleProvider.getFontColour() }}
+                      href="https://github.com/terminal29"
+                    >
+                      https://github.com/terminal29
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className={css(styles.projectContainer)}>
+              <div className={css(styles.projectHeader)}>GitLab</div>
+              <div
+                className={css(styles.contactButton)}
+                onClick={() =>
+                  setContactButtonStates({
+                    ...contactButtonStates,
+                    gitlab: true
+                  })
+                }
+              >
+                <div style={{ display: "inline-block", margin: 10 }}>
+                  {!contactButtonStates.gitlab ? (
+                    "Click to show"
+                  ) : (
+                    <a
+                      style={{ color: StyleProvider.getFontColour() }}
+                      href="https://gitlab.com/terminal29"
+                    >
+                      https://gitlab.com/terminal29
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -276,6 +517,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     background: StyleProvider.getBackgroundColour() + `cc`,
+    borderWidth: 0,
     height: 80,
     zIndex: 1000
   },
@@ -302,25 +544,82 @@ const styles = StyleSheet.create({
   subContentContainer: {
     background: StyleProvider.getLightBackgroundColour(),
     maxWidth: 1350,
-    margin: "0 auto"
+    margin: "0 auto",
+    paddingBottom: 50
   },
   contentContainer: {
-    padding: 100
+    padding: 100,
+    paddingBottom: 50
   },
   contentHeader: {
-    color: StyleProvider.getFontColour(),
+    color: StyleProvider.getHighlightFontColour(),
     fontFamily: StyleProvider.getFont(),
     fontSize: 50
   },
   contentContent: {
     color: StyleProvider.getFontColour(),
-    fontFamily: StyleProvider.getFont(),
+    fontFamily: StyleProvider.getFont()
+  },
+  aboutContent: {
     fontSize: 20,
-    lineHeight: 2
+    lineHeight: 2,
+    marginTop: 10
   },
   highlightColour: {
     color: StyleProvider.getHighlightFontColour(),
     fontSize: 20.5
+  },
+  projectContainer: {
+    margin: "30px 0"
+  },
+  projectHeader: {
+    color: StyleProvider.getFontColour(),
+    fontFamily: StyleProvider.getFont(),
+    fontSize: 30,
+    marginBottom: 10
+  },
+  projectIcons: {
+    margin: "10px 0"
+  },
+  projectIcon: {
+    color: StyleProvider.getFontColour(),
+    transition: "0.3s",
+    ":hover": {
+      color: StyleProvider.getHighlightFontColour()
+    },
+    fontSize: 30,
+    marginRight: 10
+  },
+  projectDescription: {
+    fontSize: 20,
+    margin: "10px 0",
+    lineHeight: 1.5
+  },
+  projectLink: {
+    fontSize: 20,
+    display: "inline-flex",
+    flexDirection: "row",
+    color: StyleProvider.getFontColour(),
+    textDecoration: "inherit",
+    width: "auto",
+    background: StyleProvider.getBackgroundColour(),
+    padding: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily: StyleProvider.getFont()
+  },
+  contactButton: {
+    cursor: "pointer",
+    fontSize: 20,
+    display: "inline-flex",
+    flexDirection: "row",
+    color: StyleProvider.getFontColour(),
+    width: "auto",
+    background: StyleProvider.getBackgroundColour(),
+    padding: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily: StyleProvider.getFont()
   }
 });
 

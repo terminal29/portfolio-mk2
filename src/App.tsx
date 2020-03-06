@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { css, StyleSheet } from "aphrodite";
 import "./App.css";
 import { StyleProvider } from "./StyleProvider";
+import interpolate from "./helpers/interpolate";
 
 function App() {
   const heroWords = [
@@ -13,35 +14,6 @@ function App() {
     "mobile apps",
     "technology"
   ];
-
-  // Similar to react native reanimated
-  const interpolate = (
-    input: number,
-    range: { inputRange: Array<number>; outputRange: Array<number> }
-  ) => {
-    if (range.inputRange.length !== range.outputRange.length)
-      throw Error(
-        `Input and output ranges are not same length: input: ${range.inputRange.length}, output ${range.outputRange.length}`
-      );
-    for (let i = 0; i < range.inputRange.length - 1; i++) {
-      if (input >= range.inputRange[i] && input <= range.inputRange[i + 1]) {
-        const inMin = range.inputRange[i];
-        const inMax = range.inputRange[i + 1];
-        const outMin = range.outputRange[i];
-        const outMax = range.outputRange[i + 1];
-        const abs = inMax - inMin;
-        if (abs === 0) return 0;
-        const percent = (input - inMin) / abs;
-        return outMin * (1 - percent) + outMax * percent;
-      }
-    }
-    // Clamp values outside
-    if (input < range.inputRange[0]) {
-      return range.outputRange[0];
-    } else {
-      return range.outputRange[range.outputRange.length - 1];
-    }
-  };
 
   const [messageIndex, setMessageIndex] = useState(
     Math.floor(heroWords.length / 2)
@@ -72,7 +44,7 @@ function App() {
     // Move on to the next message every `n` milliseconds
     let timeout: any = null;
 
-    const doStuff = () => {
+    const updateState = () => {
       const newIndex =
         messageIndex + 1 === heroWords.length ? 0 : messageIndex + 1;
       setMessageIndex(newIndex);
@@ -80,10 +52,10 @@ function App() {
       setHeroTextHeight(heroWordRefs.current[newIndex]?.scrollHeight ?? 0);
     };
 
-    if (heroTextWidth === 0) doStuff();
+    if (heroTextWidth === 0) updateState();
 
     timeout = setTimeout(() => {
-      doStuff();
+      updateState();
     }, 1000);
 
     return () => {
@@ -142,6 +114,12 @@ function App() {
         <div className={css(styles.foldPointerContainer)}>
           <div className={css(styles.foldPointer)}>see more</div>
           <div className={css(styles.foldPointer)}>v</div>
+        </div>
+        <div className={css(styles.menuContainer)}>
+          <div className={css(styles.menuItem)}>home</div>
+          <div className={css(styles.menuItem)}>about</div>
+          <div className={css(styles.menuItem)}>projects</div>
+          <div className={css(styles.menuItem)}>contact</div>
         </div>
       </div>
 
@@ -204,9 +182,21 @@ const styles = StyleSheet.create({
     margin: "0 auto",
     flex: "0 0 auto"
   },
-  pseudoHeroWord: {
-    position: "relative",
-    top: 0
+  menuContainer: {
+    position: "fixed",
+    top: 0,
+    right: 0,
+    left: 0,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    background: StyleProvider.getBackgroundColour() + `cc`
+  },
+  menuItem: {
+    margin: "30px 30px",
+    fontSize: 20,
+    fontFamily: StyleProvider.getFont(),
+    color: StyleProvider.getFontColour()
   }
 });
 

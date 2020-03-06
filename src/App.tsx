@@ -50,9 +50,10 @@ function App() {
       width: heroTextWidth
     },
     menuContainerBorder: {
-      borderBottomWidth: showMenuBorder ? 1 : 0,
-      borderBottomColor: "#090909",
-      borderBottomStyle: "solid"
+      transition: "0.3s",
+      background: showMenuBorder
+        ? StyleProvider.getLightBackgroundColour()
+        : "#00000000"
     }
   });
 
@@ -147,7 +148,67 @@ function App() {
         </div>
       </div>
 
-      <div>boo</div>
+      <div className={css(styles.mainContentContainer)}>
+        <div
+          className={css(styles.subContentContainer)}
+          style={{ position: "relative", top: -20 }}
+        >
+          <div className={css(styles.contentContainer)}>
+            <div className={css(styles.contentHeader)}>About me</div>
+            <div className={css(styles.contentContent)}>
+              <p>
+                I am a{" "}
+                <span className={css(styles.highlightColour)}>
+                  Software Developer
+                </span>{" "}
+                based in{" "}
+                <span className={css(styles.highlightColour)}>
+                  Brisbane, Australia
+                </span>
+                . I have been developing software for PC, Web, and Mobile for
+                over 6 years with{" "}
+                <span className={css(styles.highlightColour)}>
+                  2 years professional experience
+                </span>
+                .
+              </p>
+              <p>
+                {" "}
+                I graduated from QUT in 2019, with a{" "}
+                <span className={css(styles.highlightColour)}>
+                  Bachelors of Information Technology
+                </span>
+                , with a major in Computer Science, and a minor in Mathematics.
+              </p>
+              <p>
+                {" "}
+                I have done work with system level languages like{" "}
+                <span className={css(styles.highlightColour)}>
+                  C, C++, and C#
+                </span>
+                , and with mobile and web languages like{" "}
+                <span className={css(styles.highlightColour)}>
+                  Java, JavaScript, and TypeScript
+                </span>
+                , and frameworks like{" "}
+                <span className={css(styles.highlightColour)}>
+                  Angular and React.
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div className={css(styles.contentContainer)}>
+            <div className={css(styles.contentHeader)}>Featured Projects</div>
+            <div className={css(styles.contentContent)}></div>
+          </div>
+
+          <div className={css(styles.contentContainer)}>
+            <div className={css(styles.contentHeader)}>Contact Me</div>
+            <div className={css(styles.contentContent)}></div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -156,11 +217,11 @@ const styles = StyleSheet.create({
   siteContainer: {
     display: "flex",
     flexDirection: "column",
-    width: "100%"
+    width: "100%",
+    background: StyleProvider.getBackgroundColour()
   },
   foldContainer: {
     flex: "1 1 100vh",
-    background: StyleProvider.getBackgroundColour(),
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -180,7 +241,7 @@ const styles = StyleSheet.create({
   heroTextStatic: {},
   foldPointerContainer: {
     position: "absolute",
-    bottom: 20
+    bottom: 30
   },
   foldPointer: {
     textAlign: "center",
@@ -215,7 +276,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     background: StyleProvider.getBackgroundColour() + `cc`,
-    height: 80
+    height: 80,
+    zIndex: 1000
   },
   menuItem: {
     margin: "30px 30px",
@@ -232,6 +294,33 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     justifyContent: "flex-end"
+  },
+  mainContentContainer: {
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  subContentContainer: {
+    background: StyleProvider.getLightBackgroundColour(),
+    maxWidth: 1350,
+    margin: "0 auto"
+  },
+  contentContainer: {
+    padding: 100
+  },
+  contentHeader: {
+    color: StyleProvider.getFontColour(),
+    fontFamily: StyleProvider.getFont(),
+    fontSize: 50
+  },
+  contentContent: {
+    color: StyleProvider.getFontColour(),
+    fontFamily: StyleProvider.getFont(),
+    fontSize: 20,
+    lineHeight: 2
+  },
+  highlightColour: {
+    color: StyleProvider.getHighlightFontColour(),
+    fontSize: 20.5
   }
 });
 

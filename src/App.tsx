@@ -6,6 +6,7 @@ import interpolate from "./helpers/interpolate";
 
 import { DiReact, DiAndroid, DiApple } from "react-icons/di";
 import { FaSteam, FaVrCardboard, FaGithub } from "react-icons/fa";
+import { MdMenu } from "react-icons/md";
 
 const heroWords = [
   "experiments",
@@ -17,8 +18,8 @@ const heroWords = [
   "technology"
 ];
 
-const mobileMediaQuery = "@media only screen and (max-width: 767px) ";
-const tabletMediaQuery = "@media only screen and (max-width: 1280px) ";
+const mobileMediaQuery = "@media only screen and (max-width: 750px) ";
+const tabletMediaQuery = "@media only screen and (max-width: 1100px) ";
 
 const mod = (m: number, n: number) => ((m % n) + n) % n;
 
@@ -46,12 +47,13 @@ function App() {
 
   const [heroTextWidth, setHeroTextWidth] = useState(0);
   const [heroTextHeight, setHeroTextHeight] = useState(0);
-
   const [showMenuBorder, setShowMenuBorder] = useState(false);
-
   const [isOverlayHidden, setIsOverlayHidden] = useState(
     window.innerWidth >= 750
   );
+
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+
   useEffect(() => {
     window.addEventListener("scroll", e => {
       const newBorderSetting = window.scrollY > 10;
@@ -76,22 +78,24 @@ function App() {
     }
   });
 
+  const updateState = () => {
+    const newIndex =
+      messageIndex + 1 === heroWords.length ? 0 : messageIndex + 1;
+    setMessageIndex(newIndex);
+    let newWidth = heroWordRefs.current[newIndex]?.scrollWidth ?? 0;
+    newWidth += (2 * newWidth) / heroWords[newIndex].length;
+
+    setHeroTextWidth(newWidth);
+    setHeroTextHeight(heroWordRefs.current[newIndex]?.scrollHeight ?? 0);
+  };
+
+  useEffect(() => {
+    updateState();
+  }, []);
+
   useEffect(() => {
     // Move on to the next message every `n` milliseconds
     let timeout: any = null;
-
-    const updateState = () => {
-      const newIndex =
-        messageIndex + 1 === heroWords.length ? 0 : messageIndex + 1;
-      setMessageIndex(newIndex);
-      let newWidth = heroWordRefs.current[newIndex]?.scrollWidth ?? 0;
-      newWidth += (2 * newWidth) / heroWords[newIndex].length;
-
-      setHeroTextWidth(newWidth);
-      setHeroTextHeight(heroWordRefs.current[newIndex]?.scrollHeight ?? 0);
-    };
-
-    if (heroTextWidth === 0) updateState();
 
     timeout = setTimeout(() => {
       updateState();
@@ -177,23 +181,75 @@ function App() {
               ])}
             >
               <div className={css(styles.menuLeftAlign)}>
-                <div className={css(styles.menuItem)}>
-                  Jacob Hilton | Terminal29
-                </div>
+                <div className={css(styles.menuItem)}>Jacob Hilton</div>
               </div>
               <div className={css(styles.menuRightAlign)}>
-                <a className={css(styles.menuItem)} href="#home">
-                  home
-                </a>
-                <a className={css(styles.menuItem)} href="#about">
-                  about
-                </a>
-                <a className={css(styles.menuItem)} href="#projects">
-                  projects
-                </a>
-                <a className={css(styles.menuItem)} href="#contact">
-                  contact
-                </a>
+                <div className={css(styles.menuPC)}>
+                  <a className={css(styles.menuItem)} href="#home">
+                    home
+                  </a>
+                  <a className={css(styles.menuItem)} href="#about">
+                    about
+                  </a>
+                  <a className={css(styles.menuItem)} href="#projects">
+                    projects
+                  </a>
+                  <a className={css(styles.menuItem)} href="#contact">
+                    contact
+                  </a>
+                </div>
+                <div
+                  className={css(styles.menuMobile)}
+                  onClick={() => setMobileMenuVisible(true)}
+                >
+                  <MdMenu className={css(styles.menuItem)} size={23}>
+                    ham
+                  </MdMenu>
+                  {mobileMenuVisible && (
+                    <div className={css(styles.mobileMenuOverlay)}>
+                      <a
+                        className={css(styles.menuItem)}
+                        href="#home"
+                        onClick={e => {
+                          setMobileMenuVisible(false);
+                          e.stopPropagation();
+                        }}
+                      >
+                        home
+                      </a>
+                      <a
+                        className={css(styles.menuItem)}
+                        href="#about"
+                        onClick={e => {
+                          setMobileMenuVisible(false);
+                          e.stopPropagation();
+                        }}
+                      >
+                        about
+                      </a>
+                      <a
+                        className={css(styles.menuItem)}
+                        href="#projects"
+                        onClick={e => {
+                          setMobileMenuVisible(false);
+                          e.stopPropagation();
+                        }}
+                      >
+                        projects
+                      </a>
+                      <a
+                        className={css(styles.menuItem)}
+                        href="#contact"
+                        onClick={e => {
+                          setMobileMenuVisible(false);
+                          e.stopPropagation();
+                        }}
+                      >
+                        contact
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -532,7 +588,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: StyleProvider.getFont(),
     color: StyleProvider.getFontColour(),
-    fontSize: 30,
+    fontSize: "2rem",
+    [tabletMediaQuery]: {
+      fontSize: "1.5rem"
+    },
+    [mobileMediaQuery]: {
+      fontSize: "1rem"
+    },
     opacity: 0.7
   },
   heroTextSpacing: {
@@ -582,9 +644,37 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   menuRightAlign: {
-    flex: 1,
+    flex: "0 0 auto",
     display: "flex",
     justifyContent: "flex-end"
+  },
+  menuPC: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "flex-start",
+    [mobileMediaQuery]: {
+      display: "none"
+    }
+  },
+  menuMobile: {
+    display: "none",
+    [mobileMediaQuery]: {
+      flex: 1,
+      display: "flex",
+      justifyContent: "flex-start"
+    }
+  },
+  mobileMenuOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    background: StyleProvider.getLightBackgroundColour()
   },
   mainContentContainer: {
     paddingLeft: 20,
@@ -594,29 +684,45 @@ const styles = StyleSheet.create({
     background: StyleProvider.getLightBackgroundColour(),
     maxWidth: 1350,
     margin: "0 auto",
-    paddingBottom: 50
+    paddingBottom: 50,
+    [mobileMediaQuery]: {
+      paddingBottom: 25
+    }
   },
   contentContainer: {
     padding: 100,
-    paddingBottom: 50
+    paddingBottom: 50,
+    [mobileMediaQuery]: {
+      padding: 50,
+      paddingBottom: 25
+    }
   },
   contentHeader: {
     color: StyleProvider.getHighlightFontColour(),
     fontFamily: StyleProvider.getFont(),
-    fontSize: 50
+    fontSize: "2.4rem",
+    [mobileMediaQuery]: {
+      fontSize: "2rem"
+    }
   },
   contentContent: {
     color: StyleProvider.getFontColour(),
     fontFamily: StyleProvider.getFont()
   },
   aboutContent: {
-    fontSize: 20,
+    fontSize: "1.3rem",
+    [mobileMediaQuery]: {
+      fontSize: "1.1rem"
+    },
     lineHeight: 2,
     marginTop: 10
   },
   highlightColour: {
     color: StyleProvider.getHighlightFontColour(),
-    fontSize: 20.5
+    fontSize: "1.32rem",
+    [mobileMediaQuery]: {
+      fontSize: "1.12rem"
+    }
   },
   projectContainer: {
     margin: "30px 0"
@@ -624,7 +730,10 @@ const styles = StyleSheet.create({
   projectHeader: {
     color: StyleProvider.getFontColour(),
     fontFamily: StyleProvider.getFont(),
-    fontSize: 30,
+    fontSize: "2rem",
+    [mobileMediaQuery]: {
+      fontSize: "1.6rem"
+    },
     marginBottom: 10
   },
   projectIcons: {
@@ -640,12 +749,18 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   projectDescription: {
-    fontSize: 20,
+    fontSize: "1.32rem",
+    [mobileMediaQuery]: {
+      fontSize: "1.12rem"
+    },
     margin: "10px 0",
     lineHeight: 1.5
   },
   projectLink: {
-    fontSize: 20,
+    fontSize: "1.32rem",
+    [mobileMediaQuery]: {
+      fontSize: "1.12rem"
+    },
     display: "inline-flex",
     flexDirection: "row",
     color: StyleProvider.getFontColour(),
@@ -659,7 +774,10 @@ const styles = StyleSheet.create({
   },
   contactButton: {
     cursor: "pointer",
-    fontSize: 20,
+    fontSize: "1.32rem",
+    [mobileMediaQuery]: {
+      fontSize: "1.12rem"
+    },
     display: "inline-flex",
     flexDirection: "row",
     color: StyleProvider.getFontColour(),

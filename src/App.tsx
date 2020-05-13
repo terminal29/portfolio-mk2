@@ -146,43 +146,15 @@ function App() {
             <div className={css(styles.contentHeader)}>About me</div>
             <div className={css([styles.contentContent, styles.aboutContent])}>
               <p>
-                My name is Jacob and I am a{" "}
-                <span className={css(styles.highlightColour)}>
-                  Software Developer
-                </span>{" "}
-                based in{" "}
-                <span className={css(styles.highlightColour)}>
-                  Brisbane, Australia
-                </span>
-                . I have been developing software for PC, Web, and Mobile for
-                over 6 years with{" "}
-                <span className={css(styles.highlightColour)}>
-                  2 years professional experience
-                </span>
-                .
+                My name is Jacob and I am a software developer from Brisbane,
+                Queensland, Australia, and I've been developing programs and
+                working with computers extensively for the past 6 years.
               </p>
               <p>
-                {" "}
-                I graduated from QUT in 2019, with a{" "}
-                <span className={css(styles.highlightColour)}>
-                  Bachelors of Information Technology
-                </span>
-                , with a major in Computer Science, and a minor in Mathematics.
-              </p>
-              <p>
-                {" "}
-                I have done work with system level languages like{" "}
-                <span className={css(styles.highlightColour)}>
-                  C, C++, and C#
-                </span>
-                , and with mobile and web languages like{" "}
-                <span className={css(styles.highlightColour)}>
-                  Java, JavaScript, and TypeScript
-                </span>
-                , and frameworks like{" "}
-                <span className={css(styles.highlightColour)}>
-                  Angular and React.
-                </span>
+                My main focus and interest has been toward data processing and
+                high performance programmming, but recently I have had an
+                interest in UI and UX design and learning how people interact
+                with computers to help make my projects more accessible.
               </p>
             </div>
           </div>
@@ -191,39 +163,7 @@ function App() {
             <div className={css(styles.contentHeader)}>Featured Projects</div>
             <div className={css(styles.contentContent)}>
               <div className={css(styles.projectContainer)}>
-                <div className={css(styles.projectHeader)}>
-                  Massless Pen OpenVR Driver
-                </div>
-                <div className={css(styles.projectIcons)}>
-                  <i
-                    className={`${css(
-                      styles.projectIcon
-                    )} devicon-cplusplus-plain`}
-                  ></i>
-                  <FaSteam className={css(styles.projectIcon)} />
-                  <FaVrCardboard className={css(styles.projectIcon)} />
-                </div>
-                <div className={css(styles.projectDescription)}>
-                  A driver for SteamVR to allow the 3D tracked Massless Pen to
-                  be used with the Oculus Rift, Oculus Quest, HTC Vive, and
-                  Valve Index headsets on the SteamVR platform.
-                </div>
-                <a
-                  className={css(styles.projectLink)}
-                  href={"https://massless.io/"}
-                >
-                  <div style={{ display: "inline-block", margin: 10 }}>
-                    View Massless on
-                  </div>
-                  <i
-                    className={`${css(
-                      styles.projectIcon
-                    )} devicon-firefox-plain`}
-                  ></i>
-                </a>
-              </div>
-              <div className={css(styles.projectContainer)}>
-                <div className={css(styles.projectHeader)}>Weeknotes</div>
+                <div className={css(styles.projectHeader)}>Czar</div>
                 <div className={css(styles.projectIcons)}>
                   <i
                     className={`${css(
@@ -235,12 +175,11 @@ function App() {
                   <DiApple className={css(styles.projectIcon)} />
                 </div>
                 <div className={css(styles.projectDescription)}>
-                  A work-in-progress calendar/note taking app built using React
-                  Native.
+                  A Dungeons & Dragons spell card viewer app
                 </div>
                 <a
                   className={css(styles.projectLink)}
-                  href={"https://github.com/terminal29/weeknotes"}
+                  href={"https://github.com/terminal29/czar"}
                 >
                   <div style={{ display: "inline-block", margin: 10 }}>
                     View Project on{" "}
@@ -277,7 +216,36 @@ function App() {
                   <FaGithub className={css(styles.projectIcon)} />
                 </a>
               </div>
-
+              <div className={css(styles.projectContainer)}>
+                <div className={css(styles.projectHeader)}>
+                  Massless Pen OpenVR Driver
+                </div>
+                <div className={css(styles.projectIcons)}>
+                  <i
+                    className={`${css(
+                      styles.projectIcon
+                    )} devicon-cplusplus-plain`}
+                  ></i>
+                  <FaSteam className={css(styles.projectIcon)} />
+                  <FaVrCardboard className={css(styles.projectIcon)} />
+                </div>
+                <div className={css(styles.projectDescription)}>
+                  A driver for SteamVR to allow the 3D tracked Massless Pen to
+                  be used with the Oculus Rift, Oculus Quest, HTC Vive, and
+                  Valve Index headsets on the SteamVR platform.
+                </div>
+                <a
+                  className={css(styles.projectLink)}
+                  href={
+                    "https://github.com/Massless-io/OpenVRDriver_MasslessPen"
+                  }
+                >
+                  <div style={{ display: "inline-block", margin: 10 }}>
+                    View Project on{" "}
+                  </div>
+                  <FaGithub className={css(styles.projectIcon)} />
+                </a>
+              </div>
               <div className={css(styles.projectContainer)}>
                 <div className={css(styles.projectHeader)}>
                   OpenVR Device Viewer

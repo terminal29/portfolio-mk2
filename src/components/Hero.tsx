@@ -19,10 +19,10 @@ const HeroText = styled.div`
   font-family: ${StyleProvider.getFont()};
   color: ${StyleProvider.getFontColour()};
   font-size: 3rem;
-  ${StyleProvider.getTabletMediaQueryString()}: {
+  @media ${StyleProvider.getTabletMediaQueryString()} {
     font-size: 2rem;
   }
-  ${StyleProvider.getMobileMediaQueryString()}: {
+  @media ${StyleProvider.getMobileMediaQueryString()} {
     font-size: 1rem;
   }
   display: flex;
@@ -139,7 +139,9 @@ const Hero = (props: HeroProps) => {
     changeHeroTextIndex(heroTextIndex + 1);
   }, props.transitionDelay);
 
-  useEffect(() => changeHeroTextIndex(heroTextIndex), []);
+  useEffect(() => {
+    changeHeroTextIndex(heroTextIndex);
+  }, []);
 
   return (
     <HeroContainer>

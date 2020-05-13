@@ -15,9 +15,9 @@ export class StyleProvider {
     return "#e0e0e0";
   }
   public static getMobileMediaQueryString(): string {
-    return "@media only screen and (max-width: 750px) ";
+    return "only screen and (max-width: 750px)";
   }
   public static getTabletMediaQueryString(): string {
-    return "@media only screen and (max-width: 1100px) ";
+    return "only screen and (max-width: 1100px)";
   }
 }

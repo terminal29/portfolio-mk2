@@ -14,4 +14,10 @@ export class StyleProvider {
   public static getHighlightFontColour(): string {
     return "#e0e0e0";
   }
+  public static getMobileMediaQueryString(): string {
+    return "@media only screen and (max-width: 750px) ";
+  }
+  public static getTabletMediaQueryString(): string {
+    return "@media only screen and (max-width: 1100px) ";
+  }
 }

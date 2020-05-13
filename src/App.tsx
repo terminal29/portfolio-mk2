@@ -201,8 +201,8 @@ function App() {
                   <FaVrCardboard className={css(styles.projectIcon)} />
                 </div>
                 <div className={css(styles.projectDescription)}>
-                  A set of example drivers that show how to add custom
-                  controllers and HMDs to SteamVR.
+                  A sample OpenVR driver for others to use as a basis for their
+                  own driver.
                 </div>
                 <a
                   className={css(styles.projectLink)}
